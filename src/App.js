@@ -3,59 +3,94 @@ import './App.css';
 
 function App() {
 
-  const [todos, setTodos] = useState([]); // [{}, {}]
-  const [counter, setCounter] = useState(0); // counter = 1 // counter = 2
-  const [counter2, setCounter2] = useState(10)
-  // let counter = 0;
-
-  // const upDateCounter = () => {
-  //   ++counter;
-  //   console.log(counter);
-  // }
+  const [notes, setNotes] = useState([]);
+  const [noteTitle, setNoteTitle] = useState('');
+  const [editMode, setEditMode] = useState(false);
+  const [editableNote, setEditableNote] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
 
 
+  const getAllNotes = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/notes`);
+      console.log(response);
+      if (!response.ok) {
+        throw new Error("Something went Wrong")
+      }
+      const data = await response.json();
+      setNotes(data);
+      setIsLoading(false);
+      setNoteTitle('')
+    } catch (error) {
+      console.log(error, 'error');
+      setIsLoading(false);
+      setErrorMessage(error.message)
+    }
+  }
 
-  // fetch(`https://jsonplaceholder.typicode.com/todos/`)
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     console.log(data, 'data');
-  //     setTodos(data)
-  //   })
+  // getAllNotes()
+
+  const createHandler = (e) => {
+    e.preventDefault();
+    if (!noteTitle) {
+      return alert(`Please provide a valid title`)
+    }
+    const newNote = {
+      id: Date.now() + '',
+      title: noteTitle
+    }
+
+    // setNotes([...notes, newNote]);
+    fetch(`http://localhost:8080/notes`, {
+      method: "POST",
+      body: JSON.stringify(newNote),
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+      .then(() => {
+          getAllNotes()
+      })
+  }
+
+
+  const removeHandler = (id) => {
+    fetch(`http://localhost:8080/notes/${id}` , {
+      method: "DELETE"
+    })
+      .then(() => {
+          getAllNotes()
+      })
+  }
 
   useEffect(() => {
-    console.log('hello useEffect');
-    fetch(`https://jsonplaceholder.typicode.com/todos/`)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data, 'data');
-      setTodos(data)
-    })
-  }, []);
-
-
-  console.log(`I am outside return`);
+    getAllNotes()
+  }, [])
 
   return (
-    <div className="App">
-        <h2>
-          All Todos
-        </h2>
+    <div className='App' >
+        <form onSubmit={createHandler}>
+            <input type="text" value={noteTitle} onChange = {(e) => setNoteTitle(e.target.value)} />
+            <button type='submit'>{editMode ? 'Update Note': 'Create Note'}</button>
+        </form>
         <ul>
-          {todos?.map((item) => (
-            <li key = {item.id}>
-              {item.title}
-            </li>
-          ))}
+            {notes.map(note => (
+              <li key = {note.id}>
+                  <span>{note.title}</span>
+                  <button>Edit</button>
+                  <button onClick={() => removeHandler(note.id)}>Delete</button>
+              </li>
+            ))}
         </ul>
-        <h2>The value of the counter is {counter}</h2>
-        <button onClick={() => setCounter(counter + 1)}>Increase Counter</button>
-        <hr />
-
-        <h2>The value of the counter is {counter2}</h2>
-        <button onClick={() => setCounter2(counter2 + 1)}>Increase Counter</button>
-        {/* <button onClick={upDateCounter}>Increase Counter</button> */}
+        {isLoading && (
+          <div>Loading..............</div>
+        )}
+        {errorMessage && (
+          <p>{errorMessage}</p>
+        )}
     </div>
-  );
+  )
 }
 
 /**
