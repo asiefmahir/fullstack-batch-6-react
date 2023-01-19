@@ -5,9 +5,8 @@
   font-size: 16px;
 }
 
-#App {
+.App {
   text-align: center;
-  color: red;
 }
 
 .board-box  {
