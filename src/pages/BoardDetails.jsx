@@ -51,7 +51,7 @@ const BoardDetails = () => {
 	}
 
 	if (source.droppableId !== destination.droppableId) {
-		dispatchTaskAction({type: 'CHANGE_LIST_ID_OF_A_TASK', payload: {id: draggableId, listId: destination.draggableId}})
+		dispatchTaskAction({type: 'CHANGE_LIST_ID_OF_A_TASK', payload: {id: draggableId, listId: destination.droppableId}})
 	}
 	dispatchListAction({type: 'SORT_TASK_IDS_IN_A_LIST', payload: {source, destination, draggableId}})
   }	

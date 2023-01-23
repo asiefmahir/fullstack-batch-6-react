@@ -64,6 +64,8 @@ export const boardReducer = (boards, action) => {
                 if (item.id === action.payload.id) {
                     item.tasks = item.tasks.filter(task => task !== action.payload.taskId)
                 }
+
+                return item
             })
         }
             
