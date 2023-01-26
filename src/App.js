@@ -1,6 +1,5 @@
 import './App.css'
-import Counter from './components/Counter'
-import Theme from './components/Theme'
+import Router from './router/Router'
 
 
 
@@ -11,10 +10,7 @@ const App = () => {
 
     return (
         <div className='App'>   
-            <Counter />
-            <br />
-            <hr />
-            <Theme />
+            <Router />
         </div>
     )
 }
