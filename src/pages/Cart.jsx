@@ -4,6 +4,8 @@ import Header from "../components/Header";
 
 import {useSelector, useDispatch} from 'react-redux'
 
+import { clearCart } from "../store/reducers/cart";
+
 const Cart = () => {
     const cart = useSelector(state => state.cart);
 
@@ -48,7 +50,7 @@ const Cart = () => {
                     You Total Price Will be $ {totalAmount}
                 </h2>
                 <div class="mt-50">
-                    <button onClick={() => dispatch({type: 'CLEAR_CART'})} type="button" class="btn-big">Clear Cart</button>
+                    <button onClick={() => dispatch(clearCart())} type="button" class="btn-big">Clear Cart</button>
                 </div>
             </div>
         </>

@@ -1,13 +1,14 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux';
+
+import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
-import {composeWithDevTools} from 'redux-devtools-extension'
+
 import { cartReducer } from './reducers/cart';
 
 
 
-const rootReducer = combineReducers({
+const rootReducer = {
     cart: cartReducer 
-})
+}
 
 const myLogger = (store) => (next) => (action) => {
     console.log(`Prev State: ${JSON.stringify(store.getState())}`);
@@ -16,4 +17,9 @@ const myLogger = (store) => (next) => (action) => {
 }
 
 // useSelector((state) => state.cart)
-export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(myLogger, logger)))
+export const store = configureStore({
+    reducer: rootReducer,
+    // composeWithDevTools(applyMiddleware(myLogger, logger))
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([logger, myLogger])
+
+})

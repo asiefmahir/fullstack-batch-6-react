@@ -2,6 +2,8 @@
 import {useState} from 'react';
 import {useDispatch} from 'react-redux'
 
+import {removeFromCart, modifyQuantityOfAProduct} from '../store/reducers/cart'
+
 import {icons} from '../assets'
 
 function CartItem({item}) {
@@ -33,7 +35,7 @@ function CartItem({item}) {
                         <figure onClick={() => {
                                 if (quantity > 1) {
                                     setQuantity((prev) => prev - 1)
-                                    dispatch({type: 'MODIFY_QUANTITY_OF_AN_ITEM', payload: {id: item.id, quantity: quantity - 1}})
+                                    dispatch(modifyQuantityOfAProduct({id: item.id, quantity: quantity - 1}))
                                     
                                 }
 
@@ -53,7 +55,7 @@ function CartItem({item}) {
                             if (parseInt(e.target.value) >= 1) {
                                 
                                     setQuantity(parseInt(e.target.value))
-                                    dispatch({type: 'MODIFY_QUANTITY_OF_AN_ITEM', payload: {id: item.id, quantity: parseInt(e.target.value)}})
+                                    dispatch(modifyQuantityOfAProduct({id: item.id, quantity: parseInt(e.target.value)}))
                                     
                                 
                             }
@@ -68,7 +70,7 @@ function CartItem({item}) {
                         <figure onClick={() => {
                                if (quantity >= 1) {
                                     setQuantity((prev) => prev + 1)
-                                    dispatch({type: 'MODIFY_QUANTITY_OF_AN_ITEM', payload: {id: item.id, quantity: quantity + 1}})
+                                    dispatch(modifyQuantityOfAProduct({id: item.id, quantity: quantity + 1}))
                                      
                                 } 
                                 
@@ -80,7 +82,7 @@ function CartItem({item}) {
             </td>
             <td>$  {item.quantity ? item.price * item.quantity : 0}</td>
             <td>
-                <img onClick={() => dispatch({type: 'REMOVE_FROM_CART', payload: item.id})} class="cross-icon" src = {icons.crossIcon} />
+                <img onClick={() => dispatch(removeFromCart(item.id))} class="cross-icon" src = {icons.crossIcon} />
                 
             </td>
         </tr>
