@@ -36,67 +36,67 @@
 //     }
 // }
 
-import {createSlice, createReducer, createAction} from '@reduxjs/toolkit'
+// // import {createSlice, createReducer, createAction} from '@reduxjs/toolkit'
 
-// export const addToCart = createAction('cart/ADD_TO_CART')
-// export const removeFromCart = createAction('cart/REMOVE_FROM_CART');
-// export const modifyQuantityOfAProduct = createAction('cart/MODIFY_QUANTITY_OF_AN_ITEM')
-// export const clearCart  = createAction('cart/CLEAR_CART')
+// // export const addToCart = createAction('cart/ADD_TO_CART')
+// // export const removeFromCart = createAction('cart/REMOVE_FROM_CART');
+// // export const modifyQuantityOfAProduct = createAction('cart/MODIFY_QUANTITY_OF_AN_ITEM')
+// // export const clearCart  = createAction('cart/CLEAR_CART')
 
-// const initState = []
+// // const initState = []
 
-// export const cartReducer = createReducer(initState, (builder) => {
-//     builder
-//         .addCase(addToCart, (state, action) => {
+// // export const cartReducer = createReducer(initState, (builder) => {
+// //     builder
+// //         .addCase(addToCart, (state, action) => {
+// //             const product = state.find(item => item.id === action.payload.id);
+
+// //             product ? product.quantity++ : state.push({...action.payload, quantity: 1})
+// //         })
+// //         .addCase(removeFromCart , (state, action) => {
+// //             return state.filter(product => product.id !== action.payload)
+// //         })
+// //         .addCase(modifyQuantityOfAProduct, (state, action) => {
+// //             const product = state.find(item => item.id === action.payload.id);
+
+// //             product.quantity = action.payload.quantity
+// //         })
+// //         .addCase(clearCart, (state) => {
+// //             return []
+// //         })
+// //         .addDefaultCase((state) => {
+// //             return state
+// //         })
+// // })
+
+// const cartSlice = createSlice({
+//     name: 'cart',
+//     initialState: [],
+//     reducers: {
+//         addToCart (state, action) {
 //             const product = state.find(item => item.id === action.payload.id);
 
 //             product ? product.quantity++ : state.push({...action.payload, quantity: 1})
-//         })
-//         .addCase(removeFromCart , (state, action) => {
+//         },
+
+//         removeFromCart (state, action) {
 //             return state.filter(product => product.id !== action.payload)
-//         })
-//         .addCase(modifyQuantityOfAProduct, (state, action) => {
+//         },
+
+//         modifyQuantityOfAProduct (state, action) {
 //             const product = state.find(item => item.id === action.payload.id);
 
 //             product.quantity = action.payload.quantity
-//         })
-//         .addCase(clearCart, (state) => {
+//         },
+
+//         clearCart (state, action) {
 //             return []
-//         })
-//         .addDefaultCase((state) => {
-//             return state
-//         })
+//         }
+//     }
 // })
 
-const cartSlice = createSlice({
-    name: 'cart',
-    initialState: [],
-    reducers: {
-        addToCart (state, action) {
-            const product = state.find(item => item.id === action.payload.id);
+// export const {addToCart, clearCart, modifyQuantityOfAProduct, removeFromCart} = cartSlice.actions;
 
-            product ? product.quantity++ : state.push({...action.payload, quantity: 1})
-        },
-
-        removeFromCart (state, action) {
-            return state.filter(product => product.id !== action.payload)
-        },
-
-        modifyQuantityOfAProduct (state, action) {
-            const product = state.find(item => item.id === action.payload.id);
-
-            product.quantity = action.payload.quantity
-        },
-
-        clearCart (state, action) {
-            return []
-        }
-    }
-})
-
-export const {addToCart, clearCart, modifyQuantityOfAProduct, removeFromCart} = cartSlice.actions;
-
-export const cartReducer = cartSlice.reducer
+// export const cartReducer = cartSlice.reducer
 
 
-// []
+// // []
